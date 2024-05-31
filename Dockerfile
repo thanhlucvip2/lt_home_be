@@ -2,7 +2,7 @@ FROM node:18
 WORKDIR /app/server
 
 ENV NODE_ENV=development
-ENV PORT=3333
+ENV PORT=3000
 
 # ENV PATH /app/server/node_modules/.bin:$PATH
 
@@ -25,5 +25,5 @@ COPY yarn.lock .
 RUN yarn install
 COPY . /app/server
 RUN yarn run build
-EXPOSE 5000
+EXPOSE 3000
 CMD ["yarn", "start"]
