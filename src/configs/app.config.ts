@@ -18,3 +18,8 @@ export const CIPHER_IV = process.env.CIPHER_IV;
 
 export const JWT_EXPIRED_TIME_TOKEN = process.env.JWT_EXPIRED_TIME_TOKEN;
 export const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
+
+export const MAIL_HOST = process.env.MAIL_HOST;
+export const MAIL_USER = process.env.MAIL_USER;
+export const MAIL_PASS = process.env.MAIL_PASS;
+export const EMAIL_PORT = process.env.EMAIL_PORT || 465;

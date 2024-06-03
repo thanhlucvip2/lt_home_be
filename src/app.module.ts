@@ -6,12 +6,14 @@ import { UserModule } from '@modules/user/user.module';
 import { APP_GUARD } from '@nestjs/core';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { THROTTLER_LIMIT, THROTTLER_TTL } from '@utils/constants';
+import { MailModule } from '@modules/email/mail.module';
 
 @Module({
   imports: [
     DatabaseModule,
     AuthModule,
     UserModule,
+    MailModule,
     ThrottlerModule.forRoot([
       {
         ttl: THROTTLER_TTL,
