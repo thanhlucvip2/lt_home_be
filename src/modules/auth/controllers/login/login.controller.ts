@@ -1,4 +1,5 @@
 import {
+  Body,
   Controller,
   HttpException,
   HttpStatus,
@@ -12,7 +13,7 @@ import { ResponseModel } from '@model/response.model';
 import { UserService } from '@modules/user/user.service';
 import { LoginDto } from '@modules/auth/dto/login.dto';
 
-@Controller('login')
+@Controller('auth')
 export class LoginController {
   constructor(
     private readonly authService: AuthService,
@@ -22,6 +23,7 @@ export class LoginController {
   async login(
     @Res()
     res: Response,
+    @Body()
     userDto: LoginDto,
   ) {
     const resData: ResponseModel<{ token: string }> = {
@@ -29,6 +31,7 @@ export class LoginController {
       success: 'login-success',
       data: null,
     };
+    console.log(this.authService.hashPassword(userDto.password));
     try {
       const accountDb = await this.userService.findUserByEmail(userDto.email);
       if (!accountDb) {
