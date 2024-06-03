@@ -9,6 +9,7 @@ import {
   MAIL_PASS,
   MAIL_USER,
 } from '@configs/app.config';
+import { MailController } from './mail.controller';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import {
       },
     }),
   ],
+  controllers: [MailController],
   providers: [MailService],
   exports: [MailService],
 })
