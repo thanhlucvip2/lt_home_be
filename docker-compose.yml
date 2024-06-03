@@ -19,6 +19,6 @@ services:
       MYSQL_ROOT_PASSWORD: Thanhluc@123
       MYSQL_DATABASE: lt_home
     ports:
-      - '3306:3306'
+      - '3308:3306'
     volumes:
       - ./data:/var/lib/mysql
