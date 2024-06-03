@@ -14,10 +14,21 @@ import { Response } from 'express';
 import { ResponseModel } from '@model/response.model';
 import { UserModel } from '@model/user.model';
 import { RequestsModel } from '@model/requests.model';
+import { API_PREFIX_PATH } from '@configs/app.config';
+import {
+  ApiBadRequestResponse,
+  ApiBearerAuth,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 
 @UseGuards(AuthGuard('jwt'), ServiceGuard)
-@Controller('auth')
+@Controller(`${API_PREFIX_PATH}/auth`)
 export class GetProfileController {
+  @ApiBearerAuth('token')
+  @ApiResponse({ description: 'get-profile-success' })
+  @ApiBadRequestResponse({ description: 'Unauthorized' })
+  @ApiTags('Auth')
   @Get('profile')
   getProfile(@Res() res: Response, @Req() req: RequestsModel) {
     const resData: ResponseModel<UserModel> = {

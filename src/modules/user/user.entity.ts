@@ -14,4 +14,7 @@ export class UserEntity extends BaseEntity {
 
   @Column({ type: 'varchar', length: 20 })
   last_name: string;
+
+  @Column({ type: 'int' })
+  role: number;
 }

@@ -1,4 +1,4 @@
-import { IsMailSpam } from '@validations/is-email-spam';
+import { ApiProperty } from '@nestjs/swagger';
 import {
   IsEmail,
   IsNotEmpty,
@@ -6,12 +6,21 @@ import {
   MinLength,
   Validate,
 } from 'class-validator';
-export class LoginDto {
+
+import { IsMailSpam } from '@validations/is-email-spam';
+
+export class AuthLoginDTO {
+  @ApiProperty({
+    example: 'email',
+  })
   @IsNotEmpty({ message: 'email-empty' })
   @Validate(IsMailSpam)
   @IsEmail({}, { message: 'email-format-wrong' })
   email: string;
 
+  @ApiProperty({
+    example: 'password@',
+  })
   @IsNotEmpty({ message: 'password-empty' })
   @MinLength(8, { message: 'password-min-6' })
   @MaxLength(20, { message: 'password-max-20' })

@@ -4,6 +4,7 @@ import { Logger, ValidationPipe } from '@nestjs/common';
 import { API_PREFIX_PATH, PORT } from '@configs/app.config';
 
 import { AppModule } from './app.module';
+import { setupSwagger } from '@configs/swagger.config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -22,7 +23,7 @@ async function bootstrap() {
   // Apply middleware compression
   app.use(compression());
 
-  app.setGlobalPrefix(API_PREFIX_PATH);
+  setupSwagger(app);
 
   await app.listen(PORT);
   Logger.log(`http://localhost:${PORT}${API_PREFIX_PATH}`);

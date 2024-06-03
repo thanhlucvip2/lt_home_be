@@ -8,23 +8,34 @@ import {
 } from '@nestjs/common';
 import { Response } from 'express';
 import { assign } from 'lodash';
-import { AuthService } from '../auth.service';
 import { ResponseModel } from '@model/response.model';
 import { UserService } from '@modules/user/user.service';
-import { LoginDto } from '@modules/auth/dto/login.dto';
+import { AuthLoginDTO } from '@modules/auth/dto/login.dto';
+import { API_PREFIX_PATH } from '@configs/app.config';
+import { AuthService } from '../auth.service';
+import {
+  ApiBearerAuth,
+  ApiCreatedResponse,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 
-@Controller('auth')
+@Controller(`${API_PREFIX_PATH}/auth`)
 export class LoginController {
   constructor(
     private readonly authService: AuthService,
     private readonly userService: UserService,
   ) {}
   @Post('login')
+  @ApiBearerAuth('token')
+  @ApiTags('Auth')
+  @ApiCreatedResponse({ description: 'Login-success' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   async login(
     @Res()
     res: Response,
     @Body()
-    userDto: LoginDto,
+    userDto: AuthLoginDTO,
   ) {
     const resData: ResponseModel<{ token: string }> = {
       statusCode: HttpStatus.OK,
