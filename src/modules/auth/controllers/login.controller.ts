@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common';
 import { Response } from 'express';
 import { assign } from 'lodash';
-import { AuthService } from '../../auth.service';
+import { AuthService } from '../auth.service';
 import { ResponseModel } from '@model/response.model';
 import { UserService } from '@modules/user/user.service';
 import { LoginDto } from '@modules/auth/dto/login.dto';
@@ -31,7 +31,6 @@ export class LoginController {
       success: 'login-success',
       data: null,
     };
-    console.log(this.authService.hashPassword(userDto.password));
     try {
       const accountDb = await this.userService.findUserByEmail(userDto.email);
       if (!accountDb) {
