@@ -5,8 +5,11 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    container_name: lt-home-be
+    env_file:
+      - .env.prod
     ports:
-      - '3000:3000'
+      - '80:3000'
     depends_on:
       - mysql
     links:
@@ -14,11 +17,13 @@ services:
 
   mysql:
     image: mysql:latest
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: Thanhluc@123
-      MYSQL_DATABASE: lt_home
+    container_name: mysql-db
     ports:
-      - '3306:3306'
+      - '3308:3306'
+    env_file:
+      - .env.prod
     volumes:
-      - ./data:/var/lib/mysql
+      - mysql-data:/var/lib/mysql
+
+volumes:
+  mysql-data:
