@@ -51,4 +51,5 @@ echo "Đang kiểm tra kết nối tới LT_HOME server"
 sleep 2
 PUBLIC_IP=$(curl -s https://icanhazip.com)
 echo "Address (Địa chỉ): $PUBLIC_IP"
-echo "Port (Cổng): $PORT_SERVER"
+echo "Address (Địa chỉ): $PUBLIC_IP"
+echo "Truy cập địa chỉ này để vào server: http://$PUBLIC_IP:$PORT_SERVER/api"
