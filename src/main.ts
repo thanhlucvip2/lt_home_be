@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import * as compression from 'compression';
 import { Logger, ValidationPipe } from '@nestjs/common';
-import { API_PREFIX_PATH, PORT } from '@configs/app.config';
+import { PORT } from '@configs/app.config';
 
 import { AppModule } from './app.module';
 import { setupSwagger } from '@configs/swagger.config';
@@ -26,6 +26,6 @@ async function bootstrap() {
   setupSwagger(app);
 
   await app.listen(PORT);
-  Logger.log(`http://localhost:${PORT}${API_PREFIX_PATH}`);
+  Logger.log(`http://localhost:${PORT}/api`);
 }
 bootstrap();
