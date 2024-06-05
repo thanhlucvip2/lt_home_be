@@ -4,7 +4,7 @@
 
 [Clone source LT_HOME](https://github.com/thanhlucvip2/lt_home_be.git) framework TypeScript starter repository.
 
-# 1. Setup on server
+# Setup on server
 
 ## Run the following command to automatically download the source and setup above
 

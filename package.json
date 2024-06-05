@@ -24,7 +24,11 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "crypto:random-key": "npx nestjs-command crypto:random-key",
     "dev:docker": "bash './bash-prod-start.sh'",
-    "server:docker": "bash './bash-setup-server.sh'"
+    "server:docker": "bash './bash-setup-server.sh'",
+    "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli",
+    "migration:create": "typeorm migration:create ./src/migrations/%name%",
+    "migration:run": "npm run typeorm -- --dataSource=src/configs/typeorm-cli.config.ts migration:run",
+    "migration:revert": "npm run typeorm -- --dataSource=src/configs/typeorm-cli.config.ts migration:revert"
   },
   "dependencies": {
     "@nestjs-modules/mailer": "1.8.1",
