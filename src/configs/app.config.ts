@@ -11,6 +11,7 @@ export const DB_PORT = +process.env.DB_PORT;
 export const DB_USER = process.env.DB_USER;
 export const DB_PASSWORD = process.env.DB_PASSWORD;
 export const DB_LOGGING = process.env.DB_LOGGING === 'true' ? true : false;
+export const DB_SYNC = process.env.DB_SYNC === 'true' ? true : false;
 
 export const CIPHER_MODE = process.env.CIPHER_MODE;
 export const CIPHER_KEY = process.env.CIPHER_KEY;
