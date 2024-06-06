@@ -7,10 +7,10 @@ export class CreateUserTable1712128860745 implements MigrationInterface {
     await queryRunner.query(`
       CREATE TABLE user (
         id INT PRIMARY KEY AUTO_INCREMENT,
-        first_name VARCHAR(100),
-        last_name VARCHAR(100),
-        email VARCHAR(100) NOT NULL,
-        password VARCHAR(100) NOT NULL,
+        first_name VARCHAR(255),
+        last_name VARCHAR(255),
+        email VARCHAR(255) NOT NULL,
+        password VARCHAR(255) NOT NULL,
         role INT DEFAULT 1,
         is_deleted BOOLEAN DEFAULT FALSE,
         created_date DATETIME DEFAULT CURRENT_TIMESTAMP,
