@@ -9,9 +9,19 @@
 ## Run the following command to automatically download the source and setup above
 
 ```console
-$ git clone https://github.com/thanhlucvip2/lt_home_be.git
-$ cd lt_home_be
-$ sudo bash bash-setup-server.sh
+git clone https://github.com/thanhlucvip2/lt_home_be.git
+```
+
+```console
+cd lt_home_be
+```
+## update env
+```console
+vi .env.prod
+```
+## start app
+```console
+sudo bash bash-setup-server.sh
 ```
 
 # Setup local
@@ -20,7 +30,7 @@ $ sudo bash bash-setup-server.sh
 
 ## Use nvm
 
-```bash
+```console
 nvm install
 nvm use
 npm install -g yarn
@@ -34,7 +44,7 @@ yarn install
 https://nodejs.org/en/download/package-manager
 download and install node 20x
 
-```bash
+```console
 npm install -g yarn
 yarn install
 ```
@@ -45,13 +55,13 @@ yarn install
 
 ### 1. Command create crypto
 
-```bash
+```console
   yarn crypto:random-key
 ```
 
 ### 2. Copy the generated codes below to encrypt the password and update .env file</b>
 
-```bash
+```console
 CIPHER_KEY
 CIPHER_IV
 JWT_SECRET_KEY
@@ -60,7 +70,7 @@ JWT_EXPIRED_TIME_TOKEN
 
 update env database
 
-```bash
+```
 DB_NAME
 DB_HOST
 DB_PORT
@@ -68,23 +78,30 @@ DB_USER
 DB_PASSWORD
 ```
 
+update env mailer
+```
+MAIL_HOST
+MAIL_USER
+MAIL_PASS
+EMAIL_PORT
+```
 ### 3. Create table </b>
 
 #### - run migration
 
-```bash
+```console
  yarn migration:run
 ```
 
 #### - revert migration
 
-```bash
+```console
 yarn migration:revert
 ```
 
 # Running the app
 
-```bash
+```console
 # development
 $ yarn run start
 
@@ -101,6 +118,6 @@ https://www.docker.com/ download and install docker, docker-compose
 
 ## update .env.prod file
 
-```bash
+```console
 $ yarn run dev:docker
 ```
