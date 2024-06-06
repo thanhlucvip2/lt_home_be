@@ -6,7 +6,7 @@ import { UserModule } from '@modules/user/user.module';
 import { APP_GUARD } from '@nestjs/core';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { THROTTLER_LIMIT, THROTTLER_TTL } from '@utils/constants';
-import { MailModule } from '@modules/email/mail.module';
+import { MailModule } from 'src/services/email/mail.module';
 
 @Module({
   imports: [
