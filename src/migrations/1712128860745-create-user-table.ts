@@ -12,9 +12,8 @@ export class CreateUserTable1712128860745 implements MigrationInterface {
         email VARCHAR(255) NOT NULL,
         password VARCHAR(255) NOT NULL,
         role INT DEFAULT 1,
-        is_deleted BOOLEAN DEFAULT FALSE,
-        created_date DATETIME DEFAULT CURRENT_TIMESTAMP,
-        updated_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+        create_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        update_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         CONSTRAINT email_unique UNIQUE (email)
       )
     `);
