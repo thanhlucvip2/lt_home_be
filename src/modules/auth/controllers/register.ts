@@ -26,7 +26,7 @@ export class LoginController {
     private readonly authService: AuthService,
     private readonly userService: UserService,
   ) {}
-  @Post('login')
+  @Post('register')
   @ApiBearerAuth('token')
   @ApiTags('Auth')
   @ApiCreatedResponse({ description: 'Login-success' })
@@ -47,6 +47,7 @@ export class LoginController {
       if (!accountDb) {
         throw new HttpException('Unauthorized', HttpStatus.UNAUTHORIZED);
       }
+      console.log(this.authService.hashPassword(userDto.password));
       const checkHashPassword = await this.authService.comparePassword(
         userDto.password,
         accountDb.password,

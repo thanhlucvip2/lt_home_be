@@ -21,6 +21,7 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
+import { ROLE } from '@utils/enums';
 
 @UseGuards(AuthGuard('jwt'), ServiceGuard)
 @Controller(`${API_PREFIX_PATH}/auth`)
@@ -38,6 +39,12 @@ export class GetProfileController {
     try {
       const { user } = req;
       const currentUser: UserModel = user;
+      currentUser.roleUser =
+        currentUser.role === ROLE.ADMIN.VALUE
+          ? ROLE.ADMIN.LABEL
+          : ROLE.USER.LABEL;
+      delete currentUser.role;
+
       assign(resData, {
         data: {
           ...currentUser,

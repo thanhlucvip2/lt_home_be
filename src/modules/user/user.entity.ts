@@ -1,4 +1,5 @@
 import { BaseEntity } from '@utils/base-entity';
+import { Role } from '@utils/types';
 import { Column, Entity } from 'typeorm';
 
 @Entity('user')
@@ -16,5 +17,5 @@ export class UserEntity extends BaseEntity {
   last_name: string;
 
   @Column({ type: 'int' })
-  role: number;
+  role: Role;
 }

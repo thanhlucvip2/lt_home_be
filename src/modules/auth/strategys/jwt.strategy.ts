@@ -37,6 +37,7 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
       id,
       email: accountDB.email,
       fullName: `${accountDB.first_name} ${accountDB.last_name}`,
+      role: accountDB.role,
     };
 
     return done(null, data);
