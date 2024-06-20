@@ -2,14 +2,22 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   PrimaryGeneratedColumn,
+  DeleteDateColumn,
+  Column,
 } from 'typeorm';
 export class BaseEntity {
   @PrimaryGeneratedColumn()
   id?: string;
 
   @CreateDateColumn()
-  create_at?: Date;
+  created_at?: Date;
 
   @UpdateDateColumn()
-  update_at?: Date;
+  updated_at?: Date;
+
+  @DeleteDateColumn()
+  deleted_at?: Date;
+
+  @Column({ type: 'text', nullable: true })
+  note?: string;
 }
