@@ -7,6 +7,11 @@ import { APP_GUARD } from '@nestjs/core';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { THROTTLER_LIMIT, THROTTLER_TTL } from '@utils/constants';
 import { MailModule } from 'src/services/email/mail.module';
+import { ProductPricingModule } from '@modules/product_pricing/product_pricing.module';
+import { InventoryModule } from '@modules/inventory/inventory.module';
+import { ProductsModule } from '@modules/products/products.module';
+import { CustomersModule } from '@modules/customers/customers.module';
+import { SuppliersModule } from '@modules/suppliers/suppliers.module';
 
 @Module({
   imports: [
@@ -14,6 +19,11 @@ import { MailModule } from 'src/services/email/mail.module';
     AuthModule,
     UserModule,
     MailModule,
+    ProductsModule,
+    ProductPricingModule,
+    InventoryModule,
+    CustomersModule,
+    SuppliersModule,
     ThrottlerModule.forRoot([
       {
         ttl: THROTTLER_TTL,
