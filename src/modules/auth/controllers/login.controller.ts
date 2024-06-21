@@ -43,6 +43,7 @@ export class LoginController {
       data: null,
     };
     try {
+      console.log(this.authService.hashPassword(userDto.password));
       const accountDb = await this.userService.findUserByEmail(userDto.email);
       if (!accountDb) {
         throw new HttpException('Unauthorized', HttpStatus.UNAUTHORIZED);

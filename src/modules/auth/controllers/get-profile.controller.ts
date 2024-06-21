@@ -10,10 +10,8 @@ import {
 import { assign } from 'lodash';
 import { AuthGuard } from '@nestjs/passport';
 import { ServiceGuard } from '../guards/guards.service';
-import { Response } from 'express';
 import { ResponseModel } from '@model/response.model';
 import { UserModel } from '@model/user.model';
-import { RequestsModel } from '@model/requests.model';
 import { API_PREFIX_PATH } from '@configs/app.config';
 import {
   ApiBadRequestResponse,
@@ -22,6 +20,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { ROLE } from '@utils/enums';
+import { AppRequests, AppResponse } from '@model/index.model';
 
 @UseGuards(AuthGuard('jwt'), ServiceGuard)
 @Controller(`${API_PREFIX_PATH}/auth`)
@@ -31,7 +30,7 @@ export class GetProfileController {
   @ApiBadRequestResponse({ description: 'Unauthorized' })
   @ApiTags('Auth')
   @Get('profile')
-  getProfile(@Res() res: Response, @Req() req: RequestsModel) {
+  getProfile(@Res() res: AppResponse, @Req() req: AppRequests) {
     const resData: ResponseModel<UserModel> = {
       statusCode: HttpStatus.OK,
       success: 'get-profile-success',

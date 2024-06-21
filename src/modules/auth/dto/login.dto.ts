@@ -11,7 +11,7 @@ import { IsMailSpam } from '@validations/is-email-spam';
 
 export class AuthLoginDTO {
   @ApiProperty({
-    example: 'email',
+    example: 'admin@lthome.com',
   })
   @IsNotEmpty({ message: 'email-empty' })
   @Validate(IsMailSpam)
@@ -19,7 +19,7 @@ export class AuthLoginDTO {
   email: string;
 
   @ApiProperty({
-    example: 'password@',
+    example: 'Lthome12345@',
   })
   @IsNotEmpty({ message: 'password-empty' })
   @MinLength(8, { message: 'password-min-6' })
