@@ -1,11 +1,11 @@
 import { Repository } from 'typeorm';
-import { ProductsEntity } from './products.entity';
+import { InventoryEntity } from './inventory.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 
-export class ProductsRepository extends Repository<ProductsEntity> {
+export class InventoryRepository extends Repository<InventoryEntity> {
   constructor(
-    @InjectRepository(ProductsEntity)
-    userRepository: Repository<ProductsEntity>,
+    @InjectRepository(InventoryEntity)
+    userRepository: Repository<InventoryEntity>,
   ) {
     super(
       userRepository.target,
