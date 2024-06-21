@@ -5,9 +5,6 @@ import { Column, Entity, JoinColumn, OneToOne } from 'typeorm';
 @Entity('inventory')
 export class InventoryEntity extends BaseEntity {
   @Column({ type: 'int', unique: true })
-  sku: number;
-
-  @Column({ type: 'int', unique: true })
   quantity: number;
 
   @OneToOne(

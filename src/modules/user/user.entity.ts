@@ -1,3 +1,4 @@
+import { ProductPricingEntity } from '@modules/product_pricing/product_pricing.entity';
 import { ProductsEntity } from '@modules/products/products.entity';
 import { BaseEntity } from '@utils/base-entity';
 import { Role } from '@utils/types';
@@ -20,6 +21,7 @@ export class UserEntity extends BaseEntity {
   @Column({ type: 'int' })
   role: Role;
 
+  // products relation
   @OneToMany(
     () => ProductsEntity,
     (products_entity) => products_entity.create_by,
@@ -31,4 +33,17 @@ export class UserEntity extends BaseEntity {
     (products_entity) => products_entity.update_by,
   )
   update_products: ProductsEntity;
+
+  // product_pricing relation
+  @OneToMany(
+    () => ProductPricingEntity,
+    (product_pricing_entity) => product_pricing_entity.create_by,
+  )
+  create_products_pricing: ProductPricingEntity;
+
+  @OneToMany(
+    () => ProductPricingEntity,
+    (product_pricing_entity) => product_pricing_entity.update_by,
+  )
+  update_products_pricing: ProductPricingEntity;
 }
