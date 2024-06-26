@@ -1,6 +1,7 @@
+import { BillingExitEntity } from '@modules/billing-exit/billing-exit.entity';
 import { UserEntity } from '@modules/user/user.entity';
 import { BaseEntity } from '@utils/base-entity';
-import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
 
 @Entity('customers')
 export class CustomersEntity extends BaseEntity {
@@ -27,4 +28,10 @@ export class CustomersEntity extends BaseEntity {
     name: 'update_by',
   })
   update_by: UserEntity;
+
+  @OneToMany(
+    () => BillingExitEntity,
+    (billing_exits) => billing_exits.customer_id,
+  )
+  billing_exits: BillingExitEntity[];
 }

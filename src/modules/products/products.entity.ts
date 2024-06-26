@@ -28,18 +28,6 @@ export class ProductsEntity extends BaseEntity {
   @Column({ type: 'varchar' })
   size: string;
 
-  @ManyToOne(() => UserEntity, (user_entity) => user_entity.create_products)
-  @JoinColumn({
-    name: 'create_by',
-  })
-  create_by: UserEntity;
-
-  @ManyToOne(() => UserEntity, (user_entity) => user_entity.update_products)
-  @JoinColumn({
-    name: 'update_by',
-  })
-  update_by: UserEntity;
-
   @OneToOne(
     () => InventoryEntity,
     (inventory_entity) => inventory_entity.product_id,
@@ -54,4 +42,16 @@ export class ProductsEntity extends BaseEntity {
     (stock_entry_entity) => stock_entry_entity.product_id,
   )
   stock_entries: StockEntryEntity[];
+
+  @ManyToOne(() => UserEntity, (user_entity) => user_entity.create_products)
+  @JoinColumn({
+    name: 'create_by',
+  })
+  create_by: UserEntity;
+
+  @ManyToOne(() => UserEntity, (user_entity) => user_entity.update_products)
+  @JoinColumn({
+    name: 'update_by',
+  })
+  update_by: UserEntity;
 }

@@ -16,6 +16,8 @@ import { CustomersModule } from '@modules/customers/customers.module';
 import { SuppliersModule } from '@modules/suppliers/suppliers.module';
 import { StockEntryModule } from '@modules/stock-entry/stock-entry.module';
 import { StockExitModule } from '@modules/stock-exit/stock-exit.module';
+import { BillingExitModule } from '@modules/billing-exit/billing-exit.module';
+import { BillingEntryModule } from '@modules/billing-entry/billing-entry.module';
 
 @Module({
   imports: [
@@ -30,6 +32,8 @@ import { StockExitModule } from '@modules/stock-exit/stock-exit.module';
     SuppliersModule,
     StockEntryModule,
     StockExitModule,
+    BillingExitModule,
+    BillingEntryModule,
     ThrottlerModule.forRoot([
       {
         ttl: THROTTLER_TTL,

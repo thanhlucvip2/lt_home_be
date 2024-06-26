@@ -1,40 +1,40 @@
+import { CustomersEntity } from '@modules/customers/customers.entity';
 import { StockExitEntity } from '@modules/stock-exit/stock-exit.entity';
-import { SuppliersEntity } from '@modules/suppliers/suppliers.entity';
 import { UserEntity } from '@modules/user/user.entity';
 import { BaseEntity } from '@utils/base-entity';
-import { STATUS_BILLING_ENTRY } from '@utils/enums';
-import { StatusBillingEntry } from '@utils/types';
+import { STATUS_BILLING_EXIT } from '@utils/enums';
+import { StatusBillingExit } from '@utils/types';
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
 
-@Entity('billing-entry')
-export class BillingEntryEntity extends BaseEntity {
+@Entity('billing-exit')
+export class BillingExitEntity extends BaseEntity {
   @Column({ type: 'int' })
   total_price: number;
 
   @Column({ type: 'int' })
   sale: number;
 
-  @Column({ type: 'int', default: STATUS_BILLING_ENTRY.CREATE.VALUE })
-  status: StatusBillingEntry;
+  @Column({ type: 'int', default: STATUS_BILLING_EXIT.CREATE.VALUE })
+  status: StatusBillingExit;
 
   @ManyToOne(
-    () => SuppliersEntity,
-    (suppliers_entity) => suppliers_entity.billing_entries,
+    () => CustomersEntity,
+    (customer_entity) => customer_entity.billing_exits,
   )
   @JoinColumn({
-    name: 'supplier_id',
+    name: 'customer_id',
   })
-  supplier_id: number;
+  customer_id: number;
 
   @OneToMany(
     () => StockExitEntity,
     (stock_exit_entity) => stock_exit_entity.billing_exit_id,
   )
-  stock_entries: StockExitEntity[];
+  stock_exits: StockExitEntity[];
 
   @ManyToOne(
     () => UserEntity,
-    (user_entity) => user_entity.create_billing_entries,
+    (user_entity) => user_entity.create_billing_exits,
   )
   @JoinColumn({
     name: 'create_by',
@@ -43,7 +43,7 @@ export class BillingEntryEntity extends BaseEntity {
 
   @ManyToOne(
     () => UserEntity,
-    (user_entity) => user_entity.update_billing_entries,
+    (user_entity) => user_entity.update_billing_exits,
   )
   @JoinColumn({
     name: 'update_by',
