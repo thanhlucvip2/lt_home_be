@@ -7,7 +7,7 @@ import {
   Res,
 } from '@nestjs/common';
 import { Response } from 'express';
-import { ResponseModel } from '@model/response.model';
+import { ResponseModel } from 'src/interface/response.model';
 import { API_PREFIX_PATH } from '@configs/app.config';
 import {
   ApiBearerAuth,

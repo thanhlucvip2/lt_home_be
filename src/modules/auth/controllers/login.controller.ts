@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common';
 import { Response } from 'express';
 import { assign } from 'lodash';
-import { ResponseModel } from '@model/response.model';
+import { ResponseModel } from 'src/interface/response.model';
 import { UserService } from '@modules/user/user.service';
 import { AuthLoginDTO } from '@modules/auth/dto/login.dto';
 import { API_PREFIX_PATH } from '@configs/app.config';
@@ -43,7 +43,6 @@ export class LoginController {
       data: null,
     };
     try {
-      console.log(this.authService.hashPassword(userDto.password));
       const accountDb = await this.userService.findUserByEmail(userDto.email);
       if (!accountDb) {
         throw new HttpException('Unauthorized', HttpStatus.UNAUTHORIZED);

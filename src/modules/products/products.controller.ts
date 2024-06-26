@@ -7,7 +7,7 @@ import {
 } from '@nestjs/swagger';
 import { assign } from 'lodash';
 import { API_PREFIX_PATH } from '@configs/app.config';
-import { ResponseModel } from '@model/response.model';
+import { ResponseModel } from 'src/interface/response.model';
 import { ServiceGuard } from '@modules/auth/guards/guards.service';
 import {
   Controller,
@@ -15,38 +15,49 @@ import {
   HttpException,
   HttpStatus,
   Post,
+  Query,
   Req,
   Res,
   UseGuards,
 } from '@nestjs/common';
-import { AppRequests, AppResponse } from '@model/index.model';
+import { AppRequests, AppResponse } from 'src/interface/index.model';
 import { UserModel } from '@model/user.model';
-import { ProductsService } from './products.service';
+import { CreateProductFeature } from './features/create-product.feature';
+import { GetProductsDto } from './features/get-products-feature/get-products.dto';
+import { GetProductsFeature } from './features/get-products-feature/get-products.feature';
 
 @UseGuards(AuthGuard('jwt'), ServiceGuard)
 @Controller(`${API_PREFIX_PATH}/products`)
 export class ProductsController {
-  constructor(private readonly productsService: ProductsService) {}
+  constructor(
+    private readonly createProductFeature: CreateProductFeature,
+    private readonly getProductFeature: GetProductsFeature,
+  ) {}
   @ApiBearerAuth('token')
   @ApiResponse({ description: 'get-products-success' })
   @ApiBadRequestResponse({ description: 'Unauthorized' })
   @ApiTags('Products')
   @Get()
-  getProducts(@Res() res: AppResponse, @Req() req: AppRequests) {
+  async getProducts(
+    @Query() getProductsDto: GetProductsDto,
+    @Res() res: AppResponse,
+  ) {
     const resData: ResponseModel<any> = {
       statusCode: HttpStatus.OK,
       success: 'get-products-success',
       data: null,
     };
-    const { user } = req;
-    const currentUser: UserModel = user;
-    console.log(currentUser);
     try {
+      const data = await this.getProductFeature.list(getProductsDto);
+      assign(resData, {
+        data,
+      });
     } catch (error) {
       throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
     return res.status(HttpStatus.OK).json(resData);
   }
+
   @ApiBearerAuth('token')
   @ApiResponse({ description: 'get-products-success' })
   @ApiBadRequestResponse({ description: 'Unauthorized' })
@@ -62,7 +73,7 @@ export class ProductsController {
     try {
       const { user } = req;
       const currentUser: UserModel = user;
-      const data = await this.productsService.create({
+      const data = await this.createProductFeature.create({
         user: currentUser,
       });
       assign(resData, {

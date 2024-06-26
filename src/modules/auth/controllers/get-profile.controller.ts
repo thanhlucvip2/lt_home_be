@@ -10,7 +10,7 @@ import {
 import { assign } from 'lodash';
 import { AuthGuard } from '@nestjs/passport';
 import { ServiceGuard } from '../guards/guards.service';
-import { ResponseModel } from '@model/response.model';
+import { ResponseModel } from 'src/interface/response.model';
 import { UserModel } from '@model/user.model';
 import { API_PREFIX_PATH } from '@configs/app.config';
 import {
@@ -20,7 +20,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { ROLE } from '@utils/enums';
-import { AppRequests, AppResponse } from '@model/index.model';
+import { AppRequests, AppResponse } from 'src/interface/index.model';
 
 @UseGuards(AuthGuard('jwt'), ServiceGuard)
 @Controller(`${API_PREFIX_PATH}/auth`)
