@@ -1,7 +1,15 @@
 import { InventoryEntity } from '@modules/inventory/inventory.entity';
+import { StockEntryEntity } from '@modules/stock-entry/stock-entry.entity';
 import { UserEntity } from '@modules/user/user.entity';
 import { BaseEntity } from '@utils/base-entity';
-import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  OneToOne,
+} from 'typeorm';
 
 @Entity('products')
 export class ProductsEntity extends BaseEntity {
@@ -40,4 +48,10 @@ export class ProductsEntity extends BaseEntity {
     name: 'inventory',
   })
   inventory: InventoryEntity;
+
+  @OneToMany(
+    () => StockEntryEntity,
+    (stock_entry_entity) => stock_entry_entity.product_id,
+  )
+  stock_entries: StockEntryEntity[];
 }

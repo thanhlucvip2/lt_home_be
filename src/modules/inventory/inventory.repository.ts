@@ -5,12 +5,12 @@ import { InjectRepository } from '@nestjs/typeorm';
 export class InventoryRepository extends Repository<InventoryEntity> {
   constructor(
     @InjectRepository(InventoryEntity)
-    userRepository: Repository<InventoryEntity>,
+    inventoryRepository: Repository<InventoryEntity>,
   ) {
     super(
-      userRepository.target,
-      userRepository.manager,
-      userRepository.queryRunner,
+      inventoryRepository.target,
+      inventoryRepository.manager,
+      inventoryRepository.queryRunner,
     );
   }
 }

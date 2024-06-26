@@ -1,4 +1,4 @@
-import { TypeFile } from './types';
+import { StatusEntry, StatusExit } from './types';
 import { Role } from './types';
 
 export const ROLE = {
@@ -11,13 +11,28 @@ export const ROLE = {
     VALUE: 1 as Role,
   },
 };
-export const TYPE_FILE = {
-  FOLDER: {
-    LABEL: 'FOLDER',
-    VALUE: 0 as TypeFile,
+export const STATUS_ENTRY = {
+  CREATE: {
+    LABEL: 'CREATE',
+    VALUE: 0 as StatusEntry,
   },
-  FILE: {
-    LABEL: 'FILE',
-    VALUE: 1 as TypeFile,
+  DONE: {
+    LABEL: 'DONE',
+    VALUE: 1 as StatusEntry,
+  },
+};
+
+export const STATUS_EXIT = {
+  CREATE: {
+    LABEL: 'CREATE',
+    VALUE: 0 as StatusExit,
+  },
+  PROCESSING: {
+    LABEL: 'PROCESSING',
+    VALUE: 1 as StatusExit,
+  },
+  DONE: {
+    LABEL: 'DONE',
+    VALUE: 2 as StatusExit,
   },
 };

@@ -6,7 +6,10 @@ import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from 'typeorm';
 @Entity('product_pricing')
 export class ProductPricingEntity extends BaseEntity {
   @Column({ type: 'int' })
-  cost_price: number;
+  export_price: number;
+
+  @Column({ type: 'int' })
+  import_price: number;
 
   @Column({ type: 'int' })
   selling_price: number;

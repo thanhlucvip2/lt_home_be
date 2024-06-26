@@ -5,12 +5,12 @@ import { InjectRepository } from '@nestjs/typeorm';
 export class ProductsRepository extends Repository<ProductsEntity> {
   constructor(
     @InjectRepository(ProductsEntity)
-    userRepository: Repository<ProductsEntity>,
+    productsRepository: Repository<ProductsEntity>,
   ) {
     super(
-      userRepository.target,
-      userRepository.manager,
-      userRepository.queryRunner,
+      productsRepository.target,
+      productsRepository.manager,
+      productsRepository.queryRunner,
     );
   }
 }

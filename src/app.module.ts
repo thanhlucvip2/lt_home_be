@@ -1,17 +1,21 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { APP_GUARD } from '@nestjs/core';
+
 import { DatabaseModule } from '@database/database.module';
 import { NoXPoweredByMiddleware } from '@middlewares/no-x-powered-by.middleware';
-import { AuthModule } from '@modules/auth/auth.module';
-import { UserModule } from '@modules/user/user.module';
-import { APP_GUARD } from '@nestjs/core';
-import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { THROTTLER_LIMIT, THROTTLER_TTL } from '@utils/constants';
-import { MailModule } from 'src/services/email/mail.module';
+
+import { MailModule } from '@services/email/mail.module';
+import { UserModule } from '@modules/user/user.module';
+import { AuthModule } from '@modules/auth/auth.module';
 import { ProductPricingModule } from '@modules/product_pricing/product_pricing.module';
 import { InventoryModule } from '@modules/inventory/inventory.module';
 import { ProductsModule } from '@modules/products/products.module';
 import { CustomersModule } from '@modules/customers/customers.module';
 import { SuppliersModule } from '@modules/suppliers/suppliers.module';
+import { StockEntryModule } from '@modules/stock-entry/stock-entry.module';
+import { StockExitModule } from '@modules/stock-exit/stock-exit.module';
 
 @Module({
   imports: [
@@ -24,6 +28,8 @@ import { SuppliersModule } from '@modules/suppliers/suppliers.module';
     InventoryModule,
     CustomersModule,
     SuppliersModule,
+    StockEntryModule,
+    StockExitModule,
     ThrottlerModule.forRoot([
       {
         ttl: THROTTLER_TTL,

@@ -3,6 +3,7 @@ import { ProductPricingEntity } from '@modules/product_pricing/product_pricing.e
 import { ProductsEntity } from '@modules/products/products.entity';
 import { SuppliersEntity } from '@modules/suppliers/suppliers.entity';
 import { BaseEntity } from '@utils/base-entity';
+import { ROLE } from '@utils/enums';
 import { Role } from '@utils/types';
 import { Column, Entity, OneToMany } from 'typeorm';
 
@@ -20,7 +21,7 @@ export class UserEntity extends BaseEntity {
   @Column({ type: 'varchar' })
   last_name: string;
 
-  @Column({ type: 'int' })
+  @Column({ type: 'int', default: ROLE.USER.VALUE })
   role: Role;
 
   // products relation
@@ -28,50 +29,50 @@ export class UserEntity extends BaseEntity {
     () => ProductsEntity,
     (products_entity) => products_entity.create_by,
   )
-  create_products: ProductsEntity;
+  create_products: ProductsEntity[];
 
   @OneToMany(
     () => ProductsEntity,
     (products_entity) => products_entity.update_by,
   )
-  update_products: ProductsEntity;
+  update_products: ProductsEntity[];
 
   // product_pricing relation
   @OneToMany(
     () => ProductPricingEntity,
     (products_pricing_entity) => products_pricing_entity.create_by,
   )
-  create_products_pricing: ProductPricingEntity;
+  create_products_pricing: ProductPricingEntity[];
 
   @OneToMany(
     () => ProductPricingEntity,
     (products_pricing_entity) => products_pricing_entity.update_by,
   )
-  update_products_pricing: ProductPricingEntity;
+  update_products_pricing: ProductPricingEntity[];
 
   // customer relation
   @OneToMany(
     () => CustomersEntity,
     (customers_entity) => customers_entity.create_by,
   )
-  create_customers: CustomersEntity;
+  create_customers: CustomersEntity[];
 
   @OneToMany(
     () => CustomersEntity,
     (product_pricing_entity) => product_pricing_entity.update_by,
   )
-  update_customers: CustomersEntity;
+  update_customers: CustomersEntity[];
 
   // suppliers relation
   @OneToMany(
     () => SuppliersEntity,
     (suppliers_entity) => suppliers_entity.create_by,
   )
-  create_suppliers: SuppliersEntity;
+  create_suppliers: SuppliersEntity[];
 
   @OneToMany(
     () => SuppliersEntity,
     (product_pricing_entity) => product_pricing_entity.update_by,
   )
-  update_suppliers: SuppliersEntity;
+  update_suppliers: SuppliersEntity[];
 }

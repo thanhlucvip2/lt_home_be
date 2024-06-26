@@ -25,7 +25,8 @@
       "@configs/*": ["src/configs/*"],
       "@middlewares/*": ["src/middlewares/*"],
       "@systems/*": ["src/services/*"],
-      "@model/*": ["src/model/*"]
+      "@model/*": ["src/model/*"],
+      "@services/*": ["src/services/*"]
     }
   }
 }
