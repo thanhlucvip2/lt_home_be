@@ -1,3 +1,3 @@
 export type Role = 0 | 1;
-export type StatusEntry = 0 | 1;
-export type StatusExit = 0 | 1 | 2;
+export type StatusBillingEntry = 0 | 1;
+export type StatusBillingExit = 0 | 1 | 2;

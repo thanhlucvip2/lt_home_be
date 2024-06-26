@@ -1,4 +1,4 @@
-import { StatusEntry, StatusExit } from './types';
+import { StatusBillingEntry, StatusBillingExit } from './types';
 import { Role } from './types';
 
 export const ROLE = {
@@ -11,28 +11,28 @@ export const ROLE = {
     VALUE: 1 as Role,
   },
 };
-export const STATUS_ENTRY = {
+export const STATUS_BILLING_ENTRY = {
   CREATE: {
     LABEL: 'CREATE',
-    VALUE: 0 as StatusEntry,
+    VALUE: 0 as StatusBillingEntry,
   },
   DONE: {
     LABEL: 'DONE',
-    VALUE: 1 as StatusEntry,
+    VALUE: 1 as StatusBillingEntry,
   },
 };
 
-export const STATUS_EXIT = {
+export const STATUS_BILLING_EXIT = {
   CREATE: {
     LABEL: 'CREATE',
-    VALUE: 0 as StatusExit,
+    VALUE: 0 as StatusBillingExit,
   },
   PROCESSING: {
     LABEL: 'PROCESSING',
-    VALUE: 1 as StatusExit,
+    VALUE: 1 as StatusBillingExit,
   },
   DONE: {
     LABEL: 'DONE',
-    VALUE: 2 as StatusExit,
+    VALUE: 2 as StatusBillingExit,
   },
 };

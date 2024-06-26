@@ -1,3 +1,4 @@
+import { BillingEntryEntity } from '@modules/billing-entry/billing-entry.entity';
 import { CustomersEntity } from '@modules/customers/customers.entity';
 import { ProductPricingEntity } from '@modules/product_pricing/product_pricing.entity';
 import { ProductsEntity } from '@modules/products/products.entity';
@@ -75,4 +76,17 @@ export class UserEntity extends BaseEntity {
     (product_pricing_entity) => product_pricing_entity.update_by,
   )
   update_suppliers: SuppliersEntity[];
+
+  // billing entry relation
+  @OneToMany(
+    () => BillingEntryEntity,
+    (billing_entry_entity) => billing_entry_entity.update_by,
+  )
+  create_billing_entries: BillingEntryEntity[];
+
+  @OneToMany(
+    () => BillingEntryEntity,
+    (billing_entry_entity) => billing_entry_entity.update_by,
+  )
+  update_billing_entries: BillingEntryEntity[];
 }

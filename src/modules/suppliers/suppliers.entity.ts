@@ -1,6 +1,7 @@
+import { BillingEntryEntity } from '@modules/billing-entry/billing-entry.entity';
 import { UserEntity } from '@modules/user/user.entity';
 import { BaseEntity } from '@utils/base-entity';
-import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
 
 @Entity('suppliers')
 export class SuppliersEntity extends BaseEntity {
@@ -15,6 +16,12 @@ export class SuppliersEntity extends BaseEntity {
 
   @Column({ type: 'int' })
   contact_number: number;
+
+  @OneToMany(
+    () => BillingEntryEntity,
+    (billing_entries) => billing_entries.supplier_id,
+  )
+  billing_entries: BillingEntryEntity[];
 
   @ManyToOne(() => UserEntity, (user_entity) => user_entity.create_products)
   @JoinColumn({
