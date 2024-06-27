@@ -1,5 +1,7 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { AutomapperModule } from '@automapper/nestjs';
+import { classes } from '@automapper/classes';
 import { APP_GUARD } from '@nestjs/core';
 
 import { DatabaseModule } from '@database/database.module';
@@ -21,6 +23,9 @@ import { BillingEntryModule } from '@modules/billing-entry/billing-entry.module'
 
 @Module({
   imports: [
+    AutomapperModule.forRoot({
+      strategyInitializer: classes(),
+    }),
     DatabaseModule,
     AuthModule,
     UserModule,

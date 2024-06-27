@@ -2,10 +2,10 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { UserModel } from '@model/user.model';
 import { ProductsService } from '../../products.service';
 import { ProductsRepository } from '../../products.repository';
-import { CreateProductDto } from './create-product.dto';
+import { CreateProductsDto } from './create-products.dto';
 
 @Injectable()
-export class CreateProductFeature {
+export class CreateProductsFeature {
   constructor(
     private readonly productsService: ProductsService,
     private readonly productsRepository: ProductsRepository,
@@ -16,7 +16,7 @@ export class CreateProductFeature {
     payload,
   }: {
     user: UserModel;
-    payload: CreateProductDto;
+    payload: CreateProductsDto;
   }) {
     // create queryRunner
     const queryRunner =

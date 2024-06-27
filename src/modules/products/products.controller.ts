@@ -23,16 +23,16 @@ import {
 } from '@nestjs/common';
 import { AppRequests, AppResponse } from 'src/interface/index.model';
 import { UserModel } from '@model/user.model';
-import { CreateProductFeature } from './features/create-products-feature/create-product.feature';
+import { CreateProductsFeature } from './features/create-products-feature/create-products.feature';
 import { GetProductsDto } from './features/get-products-feature/get-products.dto';
 import { GetProductsFeature } from './features/get-products-feature/get-products.feature';
-import { CreateProductDto } from './features/create-products-feature/create-product.dto';
+import { CreateProductsDto } from './features/create-products-feature/create-products.dto';
 
 @UseGuards(AuthGuard('jwt'), ServiceGuard)
 @Controller(`${API_PREFIX_PATH}/products`)
 export class ProductsController {
   constructor(
-    private readonly createProductFeature: CreateProductFeature,
+    private readonly createProductsFeature: CreateProductsFeature,
     private readonly getProductFeature: GetProductsFeature,
   ) {}
   @ApiBearerAuth('token')
@@ -66,7 +66,7 @@ export class ProductsController {
   @ApiTags('Products')
   @Post()
   async createProduct(
-    @Body() createProductDto: CreateProductDto,
+    @Body() createProductsDto: CreateProductsDto,
     @Res() res: AppResponse,
     @Req() req: AppRequests,
   ) {
@@ -79,9 +79,9 @@ export class ProductsController {
     try {
       const { user } = req;
       const currentUser: UserModel = user;
-      const data = await this.createProductFeature.create({
+      const data = await this.createProductsFeature.create({
         user: currentUser,
-        payload: createProductDto,
+        payload: createProductsDto,
       });
       assign(resData, {
         data,

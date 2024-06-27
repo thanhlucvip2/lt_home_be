@@ -5,17 +5,19 @@ import { ProductsService } from './products.service';
 import { ProductsEntity } from './products.entity';
 import { ProductsRepository } from './products.repository';
 import { ProductsController } from './products.controller';
-import { CreateProductFeature } from './features/create-products-feature/create-product.feature';
+import { CreateProductsFeature } from './features/create-products-feature/create-products.feature';
 import { GetProductsFeature } from './features/get-products-feature/get-products.feature';
+import { GetProductsProfile } from './mapper/get-products/get-products-profile';
 
 @Module({
   imports: [TypeOrmModule.forFeature([ProductsEntity])],
   providers: [
     ProductsService,
-
     ProductsRepository,
 
-    CreateProductFeature,
+    GetProductsProfile,
+
+    CreateProductsFeature,
     GetProductsFeature,
   ],
   controllers: [ProductsController],

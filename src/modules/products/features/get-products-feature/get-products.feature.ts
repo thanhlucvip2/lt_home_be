@@ -1,18 +1,26 @@
 import { Injectable } from '@nestjs/common';
 import { has, assign } from 'lodash';
+import { Like } from 'typeorm';
+import { InjectMapper } from '@automapper/nestjs';
+import { Mapper } from '@automapper/core';
 
 import { GetProductsDto } from './get-products.dto';
-import { PRODUCTS_SORT_FILED } from '@modules/products/constants';
 import { SORT_DESC } from '@utils/constants';
+
+import { PRODUCTS_SORT_FILED } from '@modules/products/constants';
 import { ProductsRepository } from '@modules/products/products.repository';
 import { PRODUCTS_RELATION } from '@utils/relations';
 import { QueryDataAndMeta } from '@model/query-data-and-meta.model';
 import { ProductsEntity } from '@modules/products/products.entity';
-import { Like } from 'typeorm';
+import { GetProductsMapper } from '@modules/products/mapper/get-products/get-products.mapper';
 
 @Injectable()
 export class GetProductsFeature {
-  constructor(private readonly productsRepository: ProductsRepository) {}
+  constructor(
+    private readonly productsRepository: ProductsRepository,
+    @InjectMapper()
+    private readonly mapper: Mapper,
+  ) {}
 
   async list(queryParams: GetProductsDto) {
     const { limit, page, sortBy, sortName, sku, product_name } = queryParams;
@@ -49,9 +57,14 @@ export class GetProductsFeature {
       skip: (page - 1) * limit,
       take: limit,
     });
+    const data = this.mapper.mapArray(
+      results,
+      ProductsEntity,
+      GetProductsMapper,
+    );
 
-    return new QueryDataAndMeta<Partial<ProductsEntity>>({
-      data: results,
+    return new QueryDataAndMeta<GetProductsMapper>({
+      data,
       total,
       queryParams,
     });

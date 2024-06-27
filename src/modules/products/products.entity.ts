@@ -1,3 +1,4 @@
+import { AutoMap } from '@automapper/classes';
 import { InventoryEntity } from '@modules/inventory/inventory.entity';
 import { StockEntryEntity } from '@modules/stock-entry/stock-entry.entity';
 import { UserEntity } from '@modules/user/user.entity';
@@ -13,18 +14,23 @@ import {
 
 @Entity('products')
 export class ProductsEntity extends BaseEntity {
+  @AutoMap()
   @Column({ type: 'int', unique: true })
   sku: number;
 
+  @AutoMap()
   @Column({ type: 'varchar' })
   product_name: string;
 
+  @AutoMap()
   @Column({ type: 'varchar' })
   description: string;
 
+  @AutoMap()
   @Column({ type: 'int' })
   weight: number;
 
+  @AutoMap()
   @Column({ type: 'varchar' })
   size: string;
 
@@ -43,12 +49,14 @@ export class ProductsEntity extends BaseEntity {
   )
   stock_entries: StockEntryEntity[];
 
+  @AutoMap()
   @ManyToOne(() => UserEntity, (user_entity) => user_entity.create_products)
   @JoinColumn({
     name: 'create_by',
   })
   create_by: UserEntity;
 
+  @AutoMap()
   @ManyToOne(() => UserEntity, (user_entity) => user_entity.update_products)
   @JoinColumn({
     name: 'update_by',
