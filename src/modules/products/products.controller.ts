@@ -10,6 +10,7 @@ import { API_PREFIX_PATH } from '@configs/app.config';
 import { ResponseModel } from 'src/interface/response.model';
 import { ServiceGuard } from '@modules/auth/guards/guards.service';
 import {
+  Body,
   Controller,
   Get,
   HttpException,
@@ -22,9 +23,10 @@ import {
 } from '@nestjs/common';
 import { AppRequests, AppResponse } from 'src/interface/index.model';
 import { UserModel } from '@model/user.model';
-import { CreateProductFeature } from './features/create-product.feature';
+import { CreateProductFeature } from './features/create-products-feature/create-product.feature';
 import { GetProductsDto } from './features/get-products-feature/get-products.dto';
 import { GetProductsFeature } from './features/get-products-feature/get-products.feature';
+import { CreateProductDto } from './features/create-products-feature/create-product.dto';
 
 @UseGuards(AuthGuard('jwt'), ServiceGuard)
 @Controller(`${API_PREFIX_PATH}/products`)
@@ -63,7 +65,11 @@ export class ProductsController {
   @ApiBadRequestResponse({ description: 'Unauthorized' })
   @ApiTags('Products')
   @Post()
-  async createProduct(@Res() res: AppResponse, @Req() req: AppRequests) {
+  async createProduct(
+    @Body() createProductDto: CreateProductDto,
+    @Res() res: AppResponse,
+    @Req() req: AppRequests,
+  ) {
     const resData: ResponseModel<any> = {
       statusCode: HttpStatus.OK,
       success: 'create-products-success',
@@ -75,6 +81,7 @@ export class ProductsController {
       const currentUser: UserModel = user;
       const data = await this.createProductFeature.create({
         user: currentUser,
+        payload: createProductDto,
       });
       assign(resData, {
         data,

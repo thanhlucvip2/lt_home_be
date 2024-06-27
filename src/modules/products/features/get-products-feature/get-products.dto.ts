@@ -11,6 +11,10 @@ export class GetProductsDto {
   @IsOptional()
   sku: number;
 
+  @ApiProperty({ example: '', required: false })
+  @IsOptional()
+  product_name: string;
+
   // meta data
   @ApiProperty({ example: 'sku', required: false })
   @IsOptional()
