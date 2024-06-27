@@ -53,7 +53,7 @@ export class ProductsController {
     @Query() getProductsDto: GetProductsDto,
     @Res() res: AppResponse,
   ) {
-    const resData: ResponseModel<any> = {
+    const resData: ResponseModel<null> = {
       statusCode: HttpStatus.OK,
       success: 'get-products-success',
       data: null,

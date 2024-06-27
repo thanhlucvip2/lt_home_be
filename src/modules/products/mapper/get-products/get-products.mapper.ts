@@ -24,4 +24,12 @@ export class GetProductsMapper {
 
   @AutoMap()
   updateBy: string;
+
+  @AutoMap()
+  createdAt: string;
+
+  @AutoMap()
+  updatedAt: string;
+  @AutoMap()
+  deletedAt: string;
 }

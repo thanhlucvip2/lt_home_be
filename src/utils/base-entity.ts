@@ -6,7 +6,7 @@ export class BaseEntity {
   id?: number;
 
   @AutoMap()
-  @Column({ type: 'datetime', nullable: true })
+  @Column({ type: 'datetime' })
   created_at?: Date;
 
   @AutoMap()
@@ -14,6 +14,6 @@ export class BaseEntity {
   updated_at: Date;
 
   @AutoMap()
-  @Column({ type: 'datetime' })
+  @Column({ type: 'datetime', nullable: true })
   deleted_at: Date;
 }

@@ -13,7 +13,7 @@ export class UserService {
     });
   }
 
-  async findOne(id: string) {
+  async findOne(id: number) {
     return await this.userRepository.findOne({
       where: {
         id,

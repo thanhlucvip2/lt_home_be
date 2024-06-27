@@ -13,6 +13,7 @@ import {
 import { Injectable } from '@nestjs/common';
 import { GetProductsMapper } from './get-products.mapper';
 import { ProductsEntity } from '@modules/products/products.entity';
+import { formatDateToString } from '@utils/date-time';
 
 @Injectable()
 export class GetProductsProfile extends AutomapperProfile {
@@ -43,6 +44,14 @@ export class GetProductsProfile extends AutomapperProfile {
             (d: ProductsEntity) =>
               d?.update_by.last_name + d?.update_by.first_name,
           ),
+        ),
+        forMember(
+          (d) => d.createdAt,
+          mapFrom((d: ProductsEntity) => formatDateToString(d.created_at)),
+        ),
+        forMember(
+          (d) => d.updatedAt,
+          mapFrom((d: ProductsEntity) => formatDateToString(d.updated_at)),
         ),
       );
     };

@@ -49,8 +49,8 @@ export class GetProductsFeature {
     }
     const [results, total] = await this.productsRepository.findAndCount({
       where: {
-        deleted_at: null,
         ...conditionsField,
+        deleted_at: null,
       },
       order: { ...orderField },
       relations: [PRODUCTS_RELATION.CREATE_BY, PRODUCTS_RELATION.UPDATE_BY],
