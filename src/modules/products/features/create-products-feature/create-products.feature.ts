@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { UserModel } from '@model/user.model';
 import { ProductsService } from '../../products.service';
 import { ProductsRepository } from '../../products.repository';
-import { CreateProductsDto } from './create-products.dto';
+import { CreateProductsMapper } from '@modules/products/mapper/create-products/create-products.mapper';
 
 @Injectable()
 export class CreateProductsFeature {
@@ -16,7 +16,7 @@ export class CreateProductsFeature {
     payload,
   }: {
     user: UserModel;
-    payload: CreateProductsDto;
+    payload: CreateProductsMapper;
   }) {
     // create queryRunner
     const queryRunner =

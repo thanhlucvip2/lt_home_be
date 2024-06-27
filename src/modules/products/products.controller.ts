@@ -27,6 +27,9 @@ import { CreateProductsFeature } from './features/create-products-feature/create
 import { GetProductsDto } from './features/get-products-feature/get-products.dto';
 import { GetProductsFeature } from './features/get-products-feature/get-products.feature';
 import { CreateProductsDto } from './features/create-products-feature/create-products.dto';
+import { InjectMapper } from '@automapper/nestjs';
+import { Mapper } from '@automapper/core';
+import { CreateProductsMapper } from './mapper/create-products/create-products.mapper';
 
 @UseGuards(AuthGuard('jwt'), ServiceGuard)
 @Controller(`${API_PREFIX_PATH}/products`)
@@ -34,6 +37,8 @@ export class ProductsController {
   constructor(
     private readonly createProductsFeature: CreateProductsFeature,
     private readonly getProductFeature: GetProductsFeature,
+    @InjectMapper()
+    private readonly mapper: Mapper,
   ) {}
   @ApiBearerAuth('token')
   @ApiResponse({ description: 'get-products-success' })
@@ -77,11 +82,17 @@ export class ProductsController {
     };
 
     try {
+      const payload = this.mapper.map(
+        createProductsDto,
+        CreateProductsDto,
+        CreateProductsMapper,
+      );
+
       const { user } = req;
       const currentUser: UserModel = user;
       const data = await this.createProductsFeature.create({
         user: currentUser,
-        payload: createProductsDto,
+        payload,
       });
       assign(resData, {
         data,

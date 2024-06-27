@@ -1,14 +1,11 @@
 import { AutoMap } from '@automapper/classes';
 
-export class GetProductsMapper {
-  @AutoMap()
-  id: number;
-
+export class CreateProductsMapper {
   @AutoMap()
   sku: number;
 
   @AutoMap()
-  productName: string;
+  product_name: string;
 
   @AutoMap()
   description: string;
@@ -18,10 +15,4 @@ export class GetProductsMapper {
 
   @AutoMap()
   weight: number;
-
-  @AutoMap()
-  createBy: string;
-
-  @AutoMap()
-  updateBy: string;
 }
