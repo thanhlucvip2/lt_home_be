@@ -1,8 +1,8 @@
-import { UserModel } from './user.model';
+import { UserEntity } from '@modules/user/user.entity';
 import { Request, Response } from 'express';
 
 export type AppRequests = Request & {
-  user: UserModel;
+  user: UserEntity;
 };
 
 export type AppResponse = Response;

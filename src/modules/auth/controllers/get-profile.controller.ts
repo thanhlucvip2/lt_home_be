@@ -37,12 +37,13 @@ export class GetProfileController {
     };
     try {
       const { user } = req;
-      const currentUser: UserModel = user;
-      currentUser.roleUser =
-        currentUser.role === ROLE.ADMIN.VALUE
-          ? ROLE.ADMIN.LABEL
-          : ROLE.USER.LABEL;
-      delete currentUser.role;
+      const currentUser: UserModel = {
+        roleUser:
+          user.role === ROLE.ADMIN.VALUE ? ROLE.ADMIN.LABEL : ROLE.USER.LABEL,
+        id: user.id,
+        email: user.email,
+        fullName: `${user.last_name} ${user.first_name}`,
+      };
 
       assign(resData, {
         data: {

@@ -1,32 +1,33 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { ProductsService } from '../../products.service';
 import { ProductsRepository } from '../../products.repository';
-import { CreateProductsMapper } from '@modules/products/mapper/create-products/create-products.mapper';
+import { DeleteProductsDto } from './delete-products.dto';
 import { UserEntity } from '@modules/user/user.entity';
 
 @Injectable()
-export class CreateProductsFeature {
+export class DeleteProductsFeature {
   constructor(
     private readonly productsService: ProductsService,
     private readonly productsRepository: ProductsRepository,
   ) {}
 
-  async create({
+  async delete({
     user,
     payload,
   }: {
     user: UserEntity;
-    payload: CreateProductsMapper;
+    payload: DeleteProductsDto;
   }) {
+    const { ids } = payload;
     // create queryRunner
     const queryRunner =
       await this.productsRepository.manager.connection.createQueryRunner();
     await queryRunner.startTransaction();
     try {
-      await this.productsService.createProductsT({
+      await this.productsService.deleteProductsT({
         queryRunner,
         user,
-        products: payload,
+        ids,
       });
       await queryRunner.commitTransaction();
     } catch (err) {

@@ -1,29 +1,19 @@
 import { AutoMap } from '@automapper/classes';
-import {
-  CreateDateColumn,
-  UpdateDateColumn,
-  PrimaryGeneratedColumn,
-  DeleteDateColumn,
-  Column,
-} from 'typeorm';
+import { PrimaryGeneratedColumn, Column } from 'typeorm';
 export class BaseEntity {
   @AutoMap()
   @PrimaryGeneratedColumn()
-  id?: string;
+  id?: number;
 
   @AutoMap()
-  @CreateDateColumn()
+  @Column({ type: 'datetime', nullable: true })
   created_at?: Date;
 
   @AutoMap()
-  @UpdateDateColumn()
-  updated_at?: Date;
+  @Column({ type: 'datetime' })
+  updated_at: Date;
 
   @AutoMap()
-  @DeleteDateColumn()
-  deleted_at?: Date;
-
-  @AutoMap()
-  @Column({ type: 'text', nullable: true })
-  note?: string;
+  @Column({ type: 'datetime' })
+  deleted_at: Date;
 }

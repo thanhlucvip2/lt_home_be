@@ -9,7 +9,6 @@ import { ExtractJwt, Strategy, VerifiedCallback } from 'passport-jwt';
 
 import { JWT_SECRET_KEY } from '@configs/app.config';
 import { UserService } from '@modules/user/user.service';
-import { UserModel } from '@model/user.model';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
@@ -33,13 +32,6 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
       return done(new UnauthorizedException('unauthorized-access'), false);
     }
 
-    const data: UserModel = {
-      id,
-      email: accountDB.email,
-      fullName: `${accountDB.first_name} ${accountDB.last_name}`,
-      role: accountDB.role,
-    };
-
-    return done(null, data);
+    return done(null, accountDB);
   }
 }

@@ -9,6 +9,7 @@ import { CreateProductsFeature } from './features/create-products-feature/create
 import { GetProductsFeature } from './features/get-products-feature/get-products.feature';
 import { GetProductsProfile } from './mapper/get-products/get-products-profile';
 import { CreateProductsProfile } from './mapper/create-products/create-products-profile';
+import { DeleteProductsFeature } from './features/delete-products-feature/delete-products.feature';
 
 @Module({
   imports: [TypeOrmModule.forFeature([ProductsEntity])],
@@ -23,6 +24,7 @@ import { CreateProductsProfile } from './mapper/create-products/create-products-
     // feature service
     CreateProductsFeature,
     GetProductsFeature,
+    DeleteProductsFeature,
   ],
   controllers: [ProductsController],
 })

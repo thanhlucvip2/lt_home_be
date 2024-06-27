@@ -12,6 +12,7 @@ import { ServiceGuard } from '@modules/auth/guards/guards.service';
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpException,
   HttpStatus,
@@ -22,7 +23,6 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { AppRequests, AppResponse } from 'src/interface/index.model';
-import { UserModel } from '@model/user.model';
 import { CreateProductsFeature } from './features/create-products-feature/create-products.feature';
 import { GetProductsDto } from './features/get-products-feature/get-products.dto';
 import { GetProductsFeature } from './features/get-products-feature/get-products.feature';
@@ -30,6 +30,9 @@ import { CreateProductsDto } from './features/create-products-feature/create-pro
 import { InjectMapper } from '@automapper/nestjs';
 import { Mapper } from '@automapper/core';
 import { CreateProductsMapper } from './mapper/create-products/create-products.mapper';
+import { DeleteProductsDto } from './features/delete-products-feature/delete-products.dto';
+import { DeleteProductsFeature } from './features/delete-products-feature/delete-products.feature';
+import { UserEntity } from '@modules/user/user.entity';
 
 @UseGuards(AuthGuard('jwt'), ServiceGuard)
 @Controller(`${API_PREFIX_PATH}/products`)
@@ -37,6 +40,7 @@ export class ProductsController {
   constructor(
     private readonly createProductsFeature: CreateProductsFeature,
     private readonly getProductFeature: GetProductsFeature,
+    private readonly deleteProductsFeature: DeleteProductsFeature,
     @InjectMapper()
     private readonly mapper: Mapper,
   ) {}
@@ -66,7 +70,7 @@ export class ProductsController {
   }
 
   @ApiBearerAuth('token')
-  @ApiResponse({ description: 'get-products-success' })
+  @ApiResponse({ description: 'create-products-success' })
   @ApiBadRequestResponse({ description: 'Unauthorized' })
   @ApiTags('Products')
   @Post()
@@ -75,7 +79,7 @@ export class ProductsController {
     @Res() res: AppResponse,
     @Req() req: AppRequests,
   ) {
-    const resData: ResponseModel<any> = {
+    const resData: ResponseModel<null> = {
       statusCode: HttpStatus.OK,
       success: 'create-products-success',
       data: null,
@@ -89,8 +93,39 @@ export class ProductsController {
       );
 
       const { user } = req;
-      const currentUser: UserModel = user;
       const data = await this.createProductsFeature.create({
+        user,
+        payload,
+      });
+      assign(resData, {
+        data,
+      });
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    return res.status(HttpStatus.OK).json(resData);
+  }
+
+  @ApiBearerAuth('token')
+  @ApiResponse({ description: 'delete-products-success' })
+  @ApiBadRequestResponse({ description: 'Unauthorized' })
+  @ApiTags('Products')
+  @Delete()
+  async deleteProducts(
+    @Body() payload: DeleteProductsDto,
+    @Res() res: AppResponse,
+    @Req() req: AppRequests,
+  ) {
+    const resData: ResponseModel<null> = {
+      statusCode: HttpStatus.OK,
+      success: 'delete-products-success',
+      data: null,
+    };
+
+    try {
+      const { user } = req;
+      const currentUser: UserEntity = user;
+      const data = await this.deleteProductsFeature.delete({
         user: currentUser,
         payload,
       });
