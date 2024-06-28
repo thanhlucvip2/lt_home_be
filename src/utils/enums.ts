@@ -1,4 +1,4 @@
-import { StatusBillingEntry, StatusBillingExit } from './types';
+import { StatusBillingEntry, StatusBillingExit, StatusProducts } from './types';
 import { Role } from './types';
 
 export const ROLE = {
@@ -34,5 +34,16 @@ export const STATUS_BILLING_EXIT = {
   DONE: {
     LABEL: 'DONE',
     VALUE: 2 as StatusBillingExit,
+  },
+};
+
+export const STATUS_PRODUCTS = {
+  ENABLE: {
+    LABEL: 'ENABLE',
+    VALUE: 0 as StatusProducts,
+  },
+  DISABLE: {
+    LABEL: 'DISABLE',
+    VALUE: 1 as StatusProducts,
   },
 };

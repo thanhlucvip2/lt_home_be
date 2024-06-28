@@ -3,6 +3,8 @@ import { InventoryEntity } from '@modules/inventory/inventory.entity';
 import { StockEntryEntity } from '@modules/stock-entry/stock-entry.entity';
 import { UserEntity } from '@modules/user/user.entity';
 import { BaseEntity } from '@utils/base-entity';
+import { STATUS_PRODUCTS } from '@utils/enums';
+import { StatusProducts } from '@utils/types';
 import {
   Column,
   Entity,
@@ -15,7 +17,7 @@ import {
 @Entity('products')
 export class ProductsEntity extends BaseEntity {
   @AutoMap()
-  @Column({ type: 'int', unique: true })
+  @Column({ type: 'int', unique: true, default: 0 })
   sku: number;
 
   @AutoMap()
@@ -33,6 +35,10 @@ export class ProductsEntity extends BaseEntity {
   @AutoMap()
   @Column({ type: 'varchar' })
   size: string;
+
+  @AutoMap()
+  @Column({ type: 'int', default: STATUS_PRODUCTS.ENABLE.VALUE })
+  status?: StatusProducts;
 
   @OneToOne(
     () => InventoryEntity,

@@ -3,9 +3,15 @@ import { IsNumber, IsOptional, IsString } from 'class-validator';
 import { Transform } from 'class-transformer';
 import { AutoMap } from '@automapper/classes';
 
-export class CreateProductsDto {
+export class UpdateProductsDto {
   @AutoMap()
-  @ApiProperty({ example: 'product_name', required: true })
+  @ApiProperty({ example: 1, required: true })
+  @Transform(({ value }) => Number(value))
+  @IsNumber()
+  id: number;
+
+  @AutoMap()
+  @ApiProperty({ example: 'product_name', required: false })
   @IsString()
   productName: string;
 
@@ -15,13 +21,18 @@ export class CreateProductsDto {
   description: string;
 
   @AutoMap()
-  @ApiProperty({ example: '100', required: true })
+  @ApiProperty({ example: '100', required: false })
   @Transform(({ value }) => Number(value))
   @IsNumber()
   weight: number;
 
   @AutoMap()
-  @ApiProperty({ example: '10x20x30', required: true })
+  @ApiProperty({ example: '10x20x30', required: false })
   @IsString()
   size: string;
+
+  @AutoMap()
+  @ApiProperty({ example: 0, required: false })
+  @IsString()
+  status: number;
 }

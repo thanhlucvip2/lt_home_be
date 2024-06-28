@@ -2,6 +2,7 @@ import { AuthGuard } from '@nestjs/passport';
 import {
   ApiBadRequestResponse,
   ApiBearerAuth,
+  ApiBody,
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
@@ -17,6 +18,7 @@ import {
   HttpException,
   HttpStatus,
   Post,
+  Put,
   Query,
   Req,
   Res,
@@ -33,12 +35,16 @@ import { CreateProductsMapper } from './mapper/create-products/create-products.m
 import { DeleteProductsDto } from './features/delete-products-feature/delete-products.dto';
 import { DeleteProductsFeature } from './features/delete-products-feature/delete-products.feature';
 import { UserEntity } from '@modules/user/user.entity';
+import { UpdateProductsFeature } from './features/update-products-feature/update-products.feature';
+import { UpdateProductsDto } from './features/update-products-feature/update-products.dto';
+import { UpdateProductsMapper } from './mapper/update-produsts/update-products.mapper';
 
 @UseGuards(AuthGuard('jwt'), ServiceGuard)
 @Controller(`${API_PREFIX_PATH}/products`)
 export class ProductsController {
   constructor(
     private readonly createProductsFeature: CreateProductsFeature,
+    private readonly updateProductsFeature: UpdateProductsFeature,
     private readonly getProductFeature: GetProductsFeature,
     private readonly deleteProductsFeature: DeleteProductsFeature,
     @InjectMapper()
@@ -94,6 +100,42 @@ export class ProductsController {
 
       const { user } = req;
       const data = await this.createProductsFeature.create({
+        user,
+        payload,
+      });
+      assign(resData, {
+        data,
+      });
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    return res.status(HttpStatus.OK).json(resData);
+  }
+  @ApiBearerAuth('token')
+  @ApiResponse({ description: 'update-products-success' })
+  @ApiBadRequestResponse({ description: 'Unauthorized' })
+  @ApiBody({ type: [UpdateProductsDto] })
+  @ApiTags('Products')
+  @Put()
+  async updateProduct(
+    @Body() updateProductsDto: UpdateProductsDto[],
+    @Res() res: AppResponse,
+    @Req() req: AppRequests,
+  ) {
+    const resData: ResponseModel<null> = {
+      statusCode: HttpStatus.OK,
+      success: 'update-products-success',
+      data: null,
+    };
+
+    try {
+      const payload = this.mapper.mapArray(
+        updateProductsDto,
+        UpdateProductsDto,
+        UpdateProductsMapper,
+      );
+      const { user } = req;
+      const data = await this.updateProductsFeature.index({
         user,
         payload,
       });

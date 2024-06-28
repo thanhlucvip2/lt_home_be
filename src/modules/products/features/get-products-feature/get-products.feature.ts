@@ -23,7 +23,8 @@ export class GetProductsFeature {
   ) {}
 
   async index(queryParams: GetProductsDto) {
-    const { limit, page, sortBy, sortName, sku, product_name } = queryParams;
+    const { limit, page, sortBy, sortName, sku, product_name, status } =
+      queryParams;
     // Conditions
     let conditionsField = {};
     if (sku) {
@@ -34,6 +35,11 @@ export class GetProductsFeature {
     if (product_name) {
       conditionsField = assign(conditionsField, {
         product_name: Like(`%${product_name}%`),
+      });
+    }
+    if (status || status === 0) {
+      conditionsField = assign(conditionsField, {
+        status: status,
       });
     }
     // Sort column

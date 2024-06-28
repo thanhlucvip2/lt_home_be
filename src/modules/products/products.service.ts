@@ -1,21 +1,21 @@
 import { Injectable } from '@nestjs/common';
 import { ProductsRepository } from './products.repository';
 import { ProductsEntity } from './products.entity';
-import { In, QueryRunner } from 'typeorm';
+import { In, IsNull, QueryRunner } from 'typeorm';
 import { getDateNowTimeZone } from '@utils/date-time';
 import { UserEntity } from '@modules/user/user.entity';
-import { PRODUCTS_RELATION } from '@utils/relations';
 
 @Injectable()
 export class ProductsService {
   constructor(private readonly productsRepository: ProductsRepository) {}
 
-  async find(ids: number[]) {
+  async find({ ids, relations }: { ids: number[]; relations?: string[] }) {
     return await this.productsRepository.find({
       where: {
         id: In(ids),
+        deleted_at: IsNull(),
       },
-      relations: [PRODUCTS_RELATION.INVENTORY],
+      relations: relations ? [...relations] : null,
     });
   }
 
@@ -80,18 +80,18 @@ export class ProductsService {
     user,
     queryRunner,
     payload,
-    ids,
   }: {
     queryRunner: QueryRunner;
     user: UserEntity;
-    ids: number[];
     payload: Partial<ProductsEntity>[];
   }) {
-    await queryRunner.manager.update(ProductsEntity, ids, {
-      ...payload,
-      updated_at: getDateNowTimeZone(),
-      update_by: user,
-    });
+    for (let index = 0; index < payload.length; index++) {
+      await queryRunner.manager.update(ProductsEntity, payload[index].id, {
+        ...payload[index],
+        updated_at: getDateNowTimeZone(),
+        update_by: user,
+      });
+    }
 
     return null;
   }

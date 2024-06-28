@@ -5,6 +5,7 @@ import { DeleteProductsDto } from './delete-products.dto';
 import { UserEntity } from '@modules/user/user.entity';
 import { InventoryService } from '../../../inventory/inventory.service';
 import { map } from 'lodash';
+import { PRODUCTS_RELATION } from '@utils/relations';
 @Injectable()
 export class DeleteProductsFeature {
   constructor(
@@ -26,7 +27,10 @@ export class DeleteProductsFeature {
       await this.productsRepository.manager.connection.createQueryRunner();
     await queryRunner.startTransaction();
     try {
-      const listProducts = await this.productsService.find(ids);
+      const listProducts = await this.productsService.find({
+        ids,
+        relations: [PRODUCTS_RELATION.INVENTORY],
+      });
 
       await this.productsService.deleteT({
         queryRunner,

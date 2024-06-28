@@ -23,6 +23,9 @@ export class GetProductsMapper {
   size: string;
 
   @AutoMap()
+  status: string;
+
+  @AutoMap()
   weight: number;
 
   @AutoMap()

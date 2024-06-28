@@ -38,7 +38,6 @@ export class CreateProductsFeature {
         queryRunner,
         products: newProducts,
       });
-      console.log(newInventory);
 
       // update products id
       await this.productsService.updateT({
@@ -46,6 +45,7 @@ export class CreateProductsFeature {
         user,
         id: newProducts.id,
         payload: {
+          sku: 10000 + newProducts.id,
           inventory_id: newInventory,
         },
       });

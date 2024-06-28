@@ -8,12 +8,18 @@ import { IsSortOrderValue } from '@validations/is-sort-order-value';
 export class GetProductsDto {
   // filter data
   @ApiProperty({ example: '', required: false })
+  @Transform(({ value }) => Number(value))
   @IsOptional()
   sku: number;
 
   @ApiProperty({ example: '', required: false })
   @IsOptional()
   product_name: string;
+
+  @ApiProperty({ example: '', required: false })
+  @Transform(({ value }) => Number(value))
+  @IsOptional()
+  status: number;
 
   // meta data
   @ApiProperty({ example: 'sku', required: false })
