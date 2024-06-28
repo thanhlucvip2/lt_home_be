@@ -14,6 +14,12 @@ export class GetProductsMapper {
   description: string;
 
   @AutoMap()
+  inventory: {
+    id: number;
+    quantity: number;
+  };
+
+  @AutoMap()
   size: string;
 
   @AutoMap()
@@ -30,6 +36,4 @@ export class GetProductsMapper {
 
   @AutoMap()
   updatedAt: string;
-  @AutoMap()
-  deletedAt: string;
 }

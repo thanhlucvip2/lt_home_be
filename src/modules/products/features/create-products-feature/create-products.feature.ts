@@ -1,13 +1,16 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { ProductsService } from '../../products.service';
 import { ProductsRepository } from '../../products.repository';
+
 import { CreateProductsMapper } from '@modules/products/mapper/create-products/create-products.mapper';
 import { UserEntity } from '@modules/user/user.entity';
+import { InventoryService } from '@modules/inventory/inventory.service';
 
 @Injectable()
 export class CreateProductsFeature {
   constructor(
     private readonly productsService: ProductsService,
+    private readonly inventoryService: InventoryService,
     private readonly productsRepository: ProductsRepository,
   ) {}
 
@@ -23,11 +26,30 @@ export class CreateProductsFeature {
       await this.productsRepository.manager.connection.createQueryRunner();
     await queryRunner.startTransaction();
     try {
-      await this.productsService.createProductsT({
+      // create products
+      const newProducts = await this.productsService.createT({
         queryRunner,
         user,
         products: payload,
       });
+
+      // create inventory
+      const newInventory = await this.inventoryService.createT({
+        queryRunner,
+        products: newProducts,
+      });
+      console.log(newInventory);
+
+      // update products id
+      await this.productsService.updateT({
+        queryRunner,
+        user,
+        id: newProducts.id,
+        payload: {
+          inventory_id: newInventory,
+        },
+      });
+
       await queryRunner.commitTransaction();
     } catch (err) {
       await queryRunner.rollbackTransaction();

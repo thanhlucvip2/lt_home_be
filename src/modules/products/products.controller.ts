@@ -59,7 +59,7 @@ export class ProductsController {
       data: null,
     };
     try {
-      const data = await this.getProductFeature.list(getProductsDto);
+      const data = await this.getProductFeature.index(getProductsDto);
       assign(resData, {
         data,
       });

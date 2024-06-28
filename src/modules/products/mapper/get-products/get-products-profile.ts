@@ -53,6 +53,15 @@ export class GetProductsProfile extends AutomapperProfile {
           (d) => d.updatedAt,
           mapFrom((d: ProductsEntity) => formatDateToString(d.updated_at)),
         ),
+        forMember(
+          (d) => d.inventory,
+          mapFrom((d: ProductsEntity) => {
+            return {
+              id: d.inventory_id?.id,
+              quantity: d.inventory_id?.quantity,
+            };
+          }),
+        ),
       );
     };
   }

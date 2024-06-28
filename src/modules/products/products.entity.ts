@@ -39,9 +39,9 @@ export class ProductsEntity extends BaseEntity {
     (inventory_entity) => inventory_entity.product_id,
   )
   @JoinColumn({
-    name: 'inventory',
+    name: 'inventory_id',
   })
-  inventory?: InventoryEntity;
+  inventory_id?: InventoryEntity;
 
   @OneToMany(
     () => StockEntryEntity,

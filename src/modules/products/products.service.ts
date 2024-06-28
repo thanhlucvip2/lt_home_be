@@ -1,24 +1,26 @@
 import { Injectable } from '@nestjs/common';
 import { ProductsRepository } from './products.repository';
 import { ProductsEntity } from './products.entity';
-import { QueryRunner } from 'typeorm';
+import { In, QueryRunner } from 'typeorm';
 import { getDateNowTimeZone } from '@utils/date-time';
 import { UserEntity } from '@modules/user/user.entity';
+import { PRODUCTS_RELATION } from '@utils/relations';
 
 @Injectable()
 export class ProductsService {
   constructor(private readonly productsRepository: ProductsRepository) {}
 
-  async findAll() {
+  async find(ids: number[]) {
     return await this.productsRepository.find({
       where: {
-        deleted_at: null,
+        id: In(ids),
       },
+      relations: [PRODUCTS_RELATION.INVENTORY],
     });
   }
 
   // transaction rollback when error
-  async createProductsT({
+  async createT({
     user,
     products,
     queryRunner,
@@ -27,7 +29,7 @@ export class ProductsService {
     user: UserEntity;
     products: Partial<ProductsEntity>;
   }) {
-    const newProducts = await queryRunner.manager.create(ProductsEntity, {
+    const newProducts = queryRunner.manager.create(ProductsEntity, {
       ...products,
       updated_at: getDateNowTimeZone(),
       created_at: getDateNowTimeZone(),
@@ -38,7 +40,7 @@ export class ProductsService {
     return newProducts;
   }
 
-  async deleteProductsT({
+  async deleteT({
     user,
     ids,
     queryRunner,
@@ -54,7 +56,27 @@ export class ProductsService {
     return null;
   }
 
-  async updateProductsT({
+  async updateT({
+    user,
+    queryRunner,
+    payload,
+    id,
+  }: {
+    queryRunner: QueryRunner;
+    user: UserEntity;
+    id: number;
+    payload: Partial<ProductsEntity>;
+  }) {
+    await queryRunner.manager.update(ProductsEntity, id, {
+      ...payload,
+      updated_at: getDateNowTimeZone(),
+      update_by: user,
+    });
+
+    return null;
+  }
+
+  async updateListT({
     user,
     queryRunner,
     payload,
@@ -63,7 +85,7 @@ export class ProductsService {
     queryRunner: QueryRunner;
     user: UserEntity;
     ids: number[];
-    payload: ProductsEntity[];
+    payload: Partial<ProductsEntity>[];
   }) {
     await queryRunner.manager.update(ProductsEntity, ids, {
       ...payload,

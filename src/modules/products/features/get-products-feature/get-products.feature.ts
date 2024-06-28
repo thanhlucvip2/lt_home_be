@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { has, assign } from 'lodash';
-import { Like } from 'typeorm';
+import { IsNull, Like } from 'typeorm';
 import { InjectMapper } from '@automapper/nestjs';
 import { Mapper } from '@automapper/core';
 
@@ -22,7 +22,7 @@ export class GetProductsFeature {
     private readonly mapper: Mapper,
   ) {}
 
-  async list(queryParams: GetProductsDto) {
+  async index(queryParams: GetProductsDto) {
     const { limit, page, sortBy, sortName, sku, product_name } = queryParams;
     // Conditions
     let conditionsField = {};
@@ -50,13 +50,18 @@ export class GetProductsFeature {
     const [results, total] = await this.productsRepository.findAndCount({
       where: {
         ...conditionsField,
-        deleted_at: null,
+        deleted_at: IsNull(),
       },
       order: { ...orderField },
-      relations: [PRODUCTS_RELATION.CREATE_BY, PRODUCTS_RELATION.UPDATE_BY],
+      relations: [
+        PRODUCTS_RELATION.CREATE_BY,
+        PRODUCTS_RELATION.UPDATE_BY,
+        PRODUCTS_RELATION.INVENTORY,
+      ],
       skip: (page - 1) * limit,
       take: limit,
     });
+
     const data = this.mapper.mapArray(
       results,
       ProductsEntity,

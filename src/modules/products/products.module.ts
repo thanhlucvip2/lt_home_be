@@ -10,9 +10,10 @@ import { GetProductsFeature } from './features/get-products-feature/get-products
 import { GetProductsProfile } from './mapper/get-products/get-products-profile';
 import { CreateProductsProfile } from './mapper/create-products/create-products-profile';
 import { DeleteProductsFeature } from './features/delete-products-feature/delete-products.feature';
+import { InventoryModule } from '@modules/inventory/inventory.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([ProductsEntity])],
+  imports: [TypeOrmModule.forFeature([ProductsEntity]), InventoryModule],
   providers: [
     ProductsService,
     ProductsRepository,

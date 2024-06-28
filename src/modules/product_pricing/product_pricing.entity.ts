@@ -16,7 +16,7 @@ export class ProductPricingEntity extends BaseEntity {
 
   @OneToOne(
     () => ProductsEntity,
-    (products_entity) => products_entity.inventory,
+    (products_entity) => products_entity.inventory_id,
   )
   @JoinColumn({
     name: 'product_id',

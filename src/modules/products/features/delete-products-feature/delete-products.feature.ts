@@ -3,11 +3,13 @@ import { ProductsService } from '../../products.service';
 import { ProductsRepository } from '../../products.repository';
 import { DeleteProductsDto } from './delete-products.dto';
 import { UserEntity } from '@modules/user/user.entity';
-
+import { InventoryService } from '../../../inventory/inventory.service';
+import { map } from 'lodash';
 @Injectable()
 export class DeleteProductsFeature {
   constructor(
     private readonly productsService: ProductsService,
+    private readonly inventoryService: InventoryService,
     private readonly productsRepository: ProductsRepository,
   ) {}
 
@@ -24,11 +26,18 @@ export class DeleteProductsFeature {
       await this.productsRepository.manager.connection.createQueryRunner();
     await queryRunner.startTransaction();
     try {
-      await this.productsService.deleteProductsT({
+      const listProducts = await this.productsService.find(ids);
+
+      await this.productsService.deleteT({
         queryRunner,
         user,
         ids,
       });
+      await this.inventoryService.deleteT({
+        queryRunner,
+        ids: map(listProducts, 'inventory_id.id'),
+      });
+
       await queryRunner.commitTransaction();
     } catch (err) {
       await queryRunner.rollbackTransaction();
