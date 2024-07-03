@@ -124,6 +124,6 @@ https://www.docker.com/ download and install docker, docker-compose
 ## update .env.prod file
 
 ```console
-$ yarn run dev:dockerdra
+$ yarn run dev:docker
 ```
 
