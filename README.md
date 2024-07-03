@@ -1,4 +1,6 @@
 # LT_HOME application
+## Database design
+<img src="./project.drawio.svg" alt="SVG Image" width="400" height="300">
 
 ## Description
 
@@ -122,5 +124,6 @@ https://www.docker.com/ download and install docker, docker-compose
 ## update .env.prod file
 
 ```console
-$ yarn run dev:docker
+$ yarn run dev:dockerdra
 ```
+
