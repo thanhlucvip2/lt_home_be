@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { UserRepository } from './user.repository';
+import { UserEntity } from './user.entity';
 
 @Injectable()
 export class UserService {
@@ -19,5 +20,14 @@ export class UserService {
         id,
       },
     });
+  }
+
+  createManyData(dataInsert: Partial<UserEntity>[]) {
+    return this.userRepository
+      .createQueryBuilder()
+      .insert()
+      .into(UserEntity)
+      .values(dataInsert)
+      .execute();
   }
 }

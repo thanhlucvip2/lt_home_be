@@ -23,6 +23,7 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "crypto:random-key": "npx nestjs-command crypto:random-key",
+    "create-user:data": "npx nestjs-command create-user:data",
     "dev:docker": "bash './bash-prod-start.sh'",
     "server:docker": "bash './bash-setup-server.sh'",
     "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli",

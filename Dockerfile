@@ -7,7 +7,7 @@ RUN yarn install
 COPY . /app/server
 RUN yarn run build
 EXPOSE 3000
-CMD ["yarn", "start"]
+# CMD ["yarn", "start"]
 
 
 

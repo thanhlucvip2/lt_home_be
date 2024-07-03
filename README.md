@@ -98,7 +98,10 @@ EMAIL_PORT
 ```console
 yarn migration:revert
 ```
-
+### 4. Create default user data </b>
+```console
+yarn create-user:data
+```
 # Running the app
 
 ```console
