@@ -6,7 +6,7 @@ import { STATUS_BILLING_EXIT } from '@utils/enums';
 import { StatusBillingExit } from '@utils/types';
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
 
-@Entity('billing-exit')
+@Entity('billing_exit')
 export class BillingExitEntity extends BaseEntity {
   @Column({ type: 'int' })
   total_price: number;

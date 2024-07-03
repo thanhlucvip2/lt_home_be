@@ -6,7 +6,7 @@ import { STATUS_BILLING_ENTRY } from '@utils/enums';
 import { StatusBillingEntry } from '@utils/types';
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
 
-@Entity('billing-entry')
+@Entity('billing_entry')
 export class BillingEntryEntity extends BaseEntity {
   @Column({ type: 'int' })
   total_price: number;
